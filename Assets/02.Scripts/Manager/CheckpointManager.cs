@@ -25,6 +25,11 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
             checkpoints[nextCheckpointIndex].ReplaceMaterialWithGold();
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
     private void RecordCheckpointTime(int checkpointID)
     {
         if (!checkpointTimes.ContainsKey(checkpointID))
