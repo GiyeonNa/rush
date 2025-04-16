@@ -25,6 +25,11 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
             checkpoints[nextCheckpointIndex].ReplaceMaterialWithGold();
     }
 
+    private void OnDestroy()
+    {
+        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime; // 이벤트 해제
+    }
+
     private void Start()
     {
         Init();
@@ -47,12 +52,14 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
                 checkpoints[nextCheckpointIndex].ReplaceMaterialWithGold();
 
             if (checkpointID == checkpoints.Count - 1)
-                Debug.Log($"Final checkpoint reached! Total time: {currentTime:F2} seconds");
+                Debug.Log($"Final checkpoint reached! Total time: {currentTime:F3} seconds");
         }
     }
 
-    private void OnDestroy()
+    public bool IsLastCheckpointReached()
     {
-        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime; // 이벤트 해제
+        return nextCheckpointIndex >= checkpoints.Count;
     }
 }
+
+

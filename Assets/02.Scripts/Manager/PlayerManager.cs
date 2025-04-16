@@ -19,6 +19,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
         if (playerTransform != null)
         {
             playerTransform.position = spawnPosition;
+            playerTransform.rotation = Quaternion.identity; 
         }
     }
 }

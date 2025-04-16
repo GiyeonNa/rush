@@ -59,6 +59,13 @@ public class UIManager : MonoSingleton<UIManager>
         int seconds = Mathf.FloorToInt(time % 60);
         int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
 
-        return $"{minutes:00}:{seconds:00}:{milliseconds:000}";
+        return $"{minutes:00}.{seconds:00}.{milliseconds:000}";
+    }
+
+    public void DisplayPlayerRank(int rank)
+    {
+        string rankMessage = rank <= 3 ? $"You are in {rank} place!" : "You are outside the top 3.";
+        Debug.Log(rankMessage);
+        // Add UI logic here to display the rank on the screen
     }
 }
