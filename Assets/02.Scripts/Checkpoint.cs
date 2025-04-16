@@ -42,6 +42,7 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player") && !isPassed)
         {
             isPassed = true;
+            SpawnManager.Instance.SetSpawnPosition(transform.position);
             OnCheckpointPassed?.Invoke(checkpointID); 
         }
     }

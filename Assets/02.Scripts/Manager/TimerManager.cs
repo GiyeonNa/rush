@@ -51,4 +51,10 @@ public class TimerManager : MonoSingleton<TimerManager>
 
         return $"{minutes:00}:{seconds:00}:{milliseconds:000}";
     }
+
+    public void AddPenalty(float penaltyTime)
+    {
+        timer += penaltyTime;
+    }
+
 }
