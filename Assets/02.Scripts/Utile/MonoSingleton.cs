@@ -27,13 +27,22 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    // Option to enable or disable DontDestroyOnLoad (now editable in the Inspector)
+    [SerializeField]
+    private bool useDontDestroyOnLoad = true;
+
+
     // Awake method to ensure singleton instance is not destroyed between scenes
     protected virtual void Awake()
     {
         if (_instance == null)
         {
             _instance = this as T;
-            DontDestroyOnLoad(gameObject);  // Keep the instance between scenes
+
+            if (useDontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);  // Keep the instance between scenes
+            }
         }
         else if (_instance != this)
         {

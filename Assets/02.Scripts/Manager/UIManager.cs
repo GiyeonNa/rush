@@ -22,7 +22,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         base.Init();
         timerManager = TimerManager.Instance;
-        playerVehicle = FindObjectOfType<ArcadeVehicleController>();
+        playerVehicle = Object.FindFirstObjectByType<ArcadeVehicleController>();
     }
 
     private void Start()

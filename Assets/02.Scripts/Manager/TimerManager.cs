@@ -34,15 +34,6 @@ public class TimerManager : MonoSingleton<TimerManager>
         //마지막 체크포인트면 타이머 멈추기
         if (CheckPointManager.Instance.IsLastCheckpointReached())
         {
-            //TODO :: 나중에 결과창 같은곳으로 넘길 로직이 들어올듯?
-            bool isBestTime = RecordManager.Instance.TryUpdateBestTime(currentTime);
-            if (isBestTime)
-                Debug.Log("New Best Time!");
-            else
-                Debug.Log("Run Completed. No new record.");
-
-            var rank = RecordManager.Instance.GetPlayerRank(currentTime);
-            UIManager.Instance.DisplayPlayerRank(rank);
             return;
         }
 

@@ -43,7 +43,16 @@ public class Checkpoint : MonoBehaviour
         {
             isPassed = true;
             SpawnManager.Instance.SetSpawnPosition(transform.position);
-            OnCheckpointPassed?.Invoke(checkpointID); 
+            OnCheckpointPassed?.Invoke(checkpointID);
+
+            //마지막 체크포인트인지 확인
+            if (checkpointID == CheckPointManager.Instance.GetLastCheckpointID())
+            {
+                //마지막 체크포인트에 도달했을 때
+                //TOOD :: 연출?
+                GameManager.Instance.OnPlayerFinish(TimerManager.Instance.GetCurrentTime());
+            }
+         
         }
     }
 }

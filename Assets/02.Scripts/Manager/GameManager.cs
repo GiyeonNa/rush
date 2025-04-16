@@ -38,4 +38,13 @@ public class GameManager : MonoSingleton<GameManager>
         // 타이머에 패널티 추가
         TimerManager.Instance.AddPenalty(penaltyTime);
     }
+
+    public void OnPlayerFinish(float finalTime)
+    {
+        bool isBestTime = RecordManager.Instance.TryUpdateBestTime(finalTime);
+        int rank = RecordManager.Instance.GetPlayerRank(finalTime);
+
+        LoadingManager.Instance.SetResultData(finalTime, isBestTime, rank);
+        //LoadingManager.Instance.LoadResultScene();
+    }
 }

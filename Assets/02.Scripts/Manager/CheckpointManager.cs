@@ -60,6 +60,14 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
     {
         return nextCheckpointIndex >= checkpoints.Count;
     }
+
+    public int GetLastCheckpointID()
+    {
+        if (checkpoints.Count > 0)
+            return checkpoints[checkpoints.Count - 1].checkpointID;
+
+        return -1; 
+    }
 }
 
 
