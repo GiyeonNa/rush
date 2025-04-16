@@ -1,10 +1,24 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField]
     private float penaltyTime = 5f; // 패널티 시간 (초)
 
+    private void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void Init()
+    {
+        base.Init();
+    }
+
+    private void Start()
+    {
+        Init();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
