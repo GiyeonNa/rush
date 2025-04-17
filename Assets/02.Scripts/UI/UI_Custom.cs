@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using System.Net.NetworkInformation;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class UI_Custom : UIPopup
 {
@@ -58,8 +59,8 @@ public class UI_Custom : UIPopup
 
     private void LoadCarModelsAndColorsFromGroup()
     {
-        Addressables.LoadResourceLocationsAsync("CarModel").Completed += OnCarModelsLoaded;
-        Addressables.LoadResourceLocationsAsync("CarColor", typeof(MeshRenderer)).Completed += OnCarColorsLoaded;
+        Addressables.LoadResourceLocationsAsync("CarModel", typeof(Mesh)).Completed += OnCarModelsLoaded;
+        Addressables.LoadResourceLocationsAsync("CarColor", typeof(Material)).Completed += OnCarColorsLoaded;
     }
 
     private void OnCarModelsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
@@ -106,16 +107,22 @@ public class UI_Custom : UIPopup
     private void LoadCarModel(int index)
     {
         if (carModels != null && index >= 0 && index < carModels.Count)
-            carModels[index].LoadAssetAsync<MeshFilter>().Completed += OnCarModelLoaded;
+        {
+            var assetReference = carModels[index];
+
+            SetText(carNameText, assetReference.AssetGUID);
+
+            if (assetReference.OperationHandle.IsValid() && assetReference.OperationHandle.Status == AsyncOperationStatus.Succeeded)
+                carMesh.mesh = assetReference.OperationHandle.Result as Mesh;
+            else
+                assetReference.LoadAssetAsync<Mesh>().Completed += OnCarModelLoaded;
+        }
     }
 
-    private void OnCarModelLoaded(AsyncOperationHandle<MeshFilter> handle)
+    private void OnCarModelLoaded(AsyncOperationHandle<Mesh> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-            carMesh = handle.Result;
-            Debug.Log("Car model updated.");
-        }
+            carMesh.mesh = handle.Result;
         else
             Debug.LogError("Failed to load car model.");
     }
@@ -137,14 +144,24 @@ public class UI_Custom : UIPopup
     private void LoadCarColor(int index)
     {
         if (carColors != null && index >= 0 && index < carColors.Count)
-            carColors[index].LoadAssetAsync<MeshRenderer>().Completed += OnCarColorLoaded;
+        {
+            var assetReference = carColors[index];
+
+            SetText(colorNameText, assetReference.AssetGUID.Split("_")[1]);
+
+            if (assetReference.OperationHandle.IsValid() && assetReference.OperationHandle.Status == AsyncOperationStatus.Succeeded)
+                carMaterial.material = assetReference.OperationHandle.Result as Material;
+            else
+                carColors[index].LoadAssetAsync<Material>().Completed += OnCarColorLoaded;
+        }
+ 
     }
 
-    private void OnCarColorLoaded(AsyncOperationHandle<MeshRenderer> handle)
+    private void OnCarColorLoaded(AsyncOperationHandle<Material> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            carMaterial = handle.Result;
+            carMaterial.material = handle.Result;
             Debug.Log("Car color updated.");
         }
         else
