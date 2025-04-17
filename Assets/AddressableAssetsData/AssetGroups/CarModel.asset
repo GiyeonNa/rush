@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: CarModel
+  m_EditorClassIdentifier: 
+  m_GroupName: CarModel
+  m_GUID: 1de359ae4806d5047925ce6b960dbf91
+  m_SerializeEntries:
+  - m_GUID: 028724a65b499cd4ebfc30add6eb1bde
+    m_Address: Assets/05.Assets/Toon Vehicles Free/Models/City Cars/Ambulance.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CarModel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60ad550c2cbdaa445a829b1646a6c4c7
+    m_Address: Police
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CarModel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8792eaa902bb9b9419bdbdf6e46a76af
+    m_Address: Sedan
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CarModel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0ab94093e61cfc4abc0d3579186438a
+    m_Address: Hatchback
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CarModel
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5b3f1291da0b83a42a92f529c9997841, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c57ed7838011bfa4598084cbfb2459d8, type: 2}
+    - {fileID: 11400000, guid: 62c70968a1ad5a14bbed9ccd60146c39, type: 2}
