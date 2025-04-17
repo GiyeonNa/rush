@@ -29,13 +29,11 @@ public class TimerManager : MonoSingleton<TimerManager>
 
     private void Update()
     {
-        base.UpdateLogic();
-
         //마지막 체크포인트면 타이머 멈추기
         if (CheckPointManager.Instance.IsLastCheckpointReached())
-        {
             return;
-        }
+
+        base.UpdateLogic();
 
         currentTime += Time.deltaTime;
 

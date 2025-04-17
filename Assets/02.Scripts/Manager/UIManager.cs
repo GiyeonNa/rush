@@ -61,11 +61,4 @@ public class UIManager : MonoSingleton<UIManager>
 
         return $"{minutes:00}.{seconds:00}.{milliseconds:000}";
     }
-
-    public void DisplayPlayerRank(int rank)
-    {
-        string rankMessage = rank <= 3 ? $"You are in {rank} place!" : "You are outside the top 3.";
-        Debug.Log(rankMessage);
-        // Add UI logic here to display the rank on the screen
-    }
 }
