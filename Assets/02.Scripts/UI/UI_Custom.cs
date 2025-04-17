@@ -34,6 +34,8 @@ public class UI_Custom : UIPopup
 
     [Header("차량 미리보기")]
     [SerializeField]
+    private GameObject carPreview;
+    [SerializeField]
     private MeshFilter carMesh;
     [SerializeField]
     private MeshRenderer carMaterial;
@@ -41,6 +43,10 @@ public class UI_Custom : UIPopup
     [Header("차량 모델,색상 어드레서블")]
     private List<AssetReference> carModels = new List<AssetReference>();
     private List<AssetReference> carColors = new List<AssetReference>();
+
+    [Header("차량 회전 설정")]
+    [SerializeField]
+    private float rotationSpeed = 10f;
 
     private int currentCarIndex = 0;
     private int currentColorIndex = 0;
@@ -55,6 +61,11 @@ public class UI_Custom : UIPopup
 
         // Dynamically load car models and colors from Addressable Groups
         LoadCarModelsAndColorsFromGroup();
+    }
+
+    private void Update()
+    {
+        RotateCarPreview();
     }
 
     private void LoadCarModelsAndColorsFromGroup()
@@ -169,6 +180,14 @@ public class UI_Custom : UIPopup
 
     }
     #endregion
+
+    private void RotateCarPreview()
+    {
+        if (carPreview != null)
+        {
+            carPreview.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
+    }
 
     private void OnClickApplyButton()
     {
