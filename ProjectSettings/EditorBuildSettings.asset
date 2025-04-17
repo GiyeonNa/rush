@@ -8,6 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/DriveTest.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/01.Scenes/Loading.unity
+    guid: 59e3298160680d243bfd738512bdb9a6
+  - enabled: 1
+    path: Assets/01.Scenes/Result.unity
+    guid: 76f4581484e28574ba86e28811e4ad73
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 04330e9f4162bdb40a12f6d9ccc3f23a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
