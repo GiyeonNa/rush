@@ -32,12 +32,13 @@ public class UI_Start : UIPopup
     private void OnClickStart()
     {
         // 게임 시작 로직
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Select");
     }
 
     private void OnClickCustom()
     {
         // 커스터마이징 로직
+        SceneManager.LoadScene("Custom");
         Debug.Log("커스터마이징 버튼 클릭됨");
     }
 

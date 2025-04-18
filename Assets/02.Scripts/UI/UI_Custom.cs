@@ -4,9 +4,9 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
-using System.Net.NetworkInformation;
 using System.Collections.Generic;
-using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 
 public class UI_Custom : UIPopup
 {
@@ -58,8 +58,9 @@ public class UI_Custom : UIPopup
         carRightButton.onClick.AddListener(OnCarRightButtonClicked);
         colorLeftButton.onClick.AddListener(OnColorLeftButtonClicked);
         colorRightButton.onClick.AddListener(OnColorRightButtonClicked);
+        applyButton.onClick.AddListener(OnClickApplyButton);
+        closeButton.onClick.AddListener(OnClickCloseButton);
 
-        // Dynamically load car models and colors from Addressable Groups
         LoadCarModelsAndColorsFromGroup();
     }
 
@@ -181,6 +182,7 @@ public class UI_Custom : UIPopup
     }
     #endregion
 
+    //연출
     private void RotateCarPreview()
     {
         if (carPreview != null)
@@ -189,13 +191,35 @@ public class UI_Custom : UIPopup
         }
     }
 
+    /// <summary>
+    /// Apply 버튼 클릭 시 데이터 저장
+    /// </summary>
     private void OnClickApplyButton()
     {
-
+        if (carMesh.mesh != null && carMaterial.material != null)
+        {
+            CarSelectionData.SelectedMesh = carMesh.mesh;
+            CarSelectionData.SelectedMaterial = carMaterial.material;
+            SceneManager.LoadScene("Start");
+        }
     }
 
+    /// <summary>
+    /// Close 버튼 클릭 시 정보 저장하지 않고 돌아가기
+    /// </summary>
     private void OnClickCloseButton()
     {
+        //일단은 씬으로 돌리자
+        Debug.Log("Not Save");
+        SceneManager.LoadScene("Start");
 
     }
+}
+
+// Add a static class to store the selected data globally
+// 이걸 다른곳으로
+public static class CarSelectionData
+{
+    public static Mesh SelectedMesh { get; set; }
+    public static Material SelectedMaterial { get; set; }
 }

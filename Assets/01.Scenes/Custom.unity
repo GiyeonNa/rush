@@ -6405,7 +6405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2263946868837752288}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.9645344, z: 0, w: -0.2639571}
+  m_LocalRotation: {x: -0, y: -0.86007506, z: 0, w: -0.51016766}
   m_LocalPosition: {x: -2.7776403, y: 1.61, z: -4.781197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6414,7 +6414,7 @@ Transform:
   - {fileID: 2263946868411348248}
   - {fileID: 2263946869353787445}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -210.61, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -241.35, z: 0}
 --- !u!65 &2263946868837752299
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21459,6 +21459,10 @@ PrefabInstance:
       propertyPath: carMesh
       value: 
       objectReference: {fileID: 6072108623612982949}
+    - target: {fileID: 3949406399871654951, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
+      propertyPath: carPreview
+      value: 
+      objectReference: {fileID: 2263946868837752288}
     - target: {fileID: 3949406399871654951, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
       propertyPath: carMaterial
       value: 
