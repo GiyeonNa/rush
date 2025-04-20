@@ -560,17 +560,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1334893479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5437061339914045245, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
-  m_PrefabInstance: {fileID: 2577796763667839864}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1935865953
 GameObject:
   m_ObjectHideFlags: 0
@@ -21491,10 +21480,6 @@ PrefabInstance:
       propertyPath: carMesh
       value: 
       objectReference: {fileID: 6072108623612982949}
-    - target: {fileID: 3949406399871654951, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
-      propertyPath: backButton
-      value: 
-      objectReference: {fileID: 1334893479}
     - target: {fileID: 3949406399871654951, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
       propertyPath: carPreview
       value: 
