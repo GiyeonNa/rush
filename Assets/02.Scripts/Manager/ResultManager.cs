@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoSingleton<ResultManager>
 {
@@ -7,10 +9,16 @@ public class ResultManager : MonoSingleton<ResultManager>
     private TextMeshProUGUI playerTimeText;
     [SerializeField]
     private TextMeshProUGUI rankText;
+    [SerializeField]
+    private Button backButton;
+    [SerializeField]
+    private Button retryButton;
 
     private void Awake()
     {
         base.Awake();
+        backButton.onClick.AddListener(OnClickBack);
+        retryButton.onClick.AddListener(OnClickRetry);
     }
 
     private void Start()
@@ -32,5 +40,16 @@ public class ResultManager : MonoSingleton<ResultManager>
     {
         playerTimeText.text = $"Time: {playerTime:F2} seconds";
         rankText.text = $"Rank: {rank}";
+    }
+
+    private void OnClickBack()
+    {
+        // 뒤로가기 로직
+        SceneManager.LoadScene("Select");
+    }
+    private void OnClickRetry()
+    {
+        // 재시작 로직
+        SceneManager.LoadScene("DriveTest");
     }
 }

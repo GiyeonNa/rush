@@ -30,6 +30,8 @@ public class UI_Custom : UIPopup
     [SerializeField]
     private Button closeButton;
     [SerializeField]
+    private Button backButton;
+    [SerializeField]
     private Button applyButton;
 
     [Header("차량 미리보기")]
@@ -51,6 +53,12 @@ public class UI_Custom : UIPopup
     private int currentCarIndex = 0;
     private int currentColorIndex = 0;
 
+    private const string SelectedCarModelKey = "SelectedCarModel";
+    private const string SelectedCarColorKey = "SelectedCarColor";
+
+    private bool carModelsLoaded = false;
+    private bool carColorsLoaded = false;
+
     private void Awake()
     {
         base.Awake();
@@ -60,6 +68,7 @@ public class UI_Custom : UIPopup
         colorRightButton.onClick.AddListener(OnColorRightButtonClicked);
         applyButton.onClick.AddListener(OnClickApplyButton);
         closeButton.onClick.AddListener(OnClickCloseButton);
+        backButton.onClick.AddListener(OnClickCloseButton);
 
         LoadCarModelsAndColorsFromGroup();
     }
@@ -71,8 +80,67 @@ public class UI_Custom : UIPopup
 
     private void LoadCarModelsAndColorsFromGroup()
     {
-        Addressables.LoadResourceLocationsAsync("CarModel", typeof(Mesh)).Completed += OnCarModelsLoaded;
-        Addressables.LoadResourceLocationsAsync("CarColor", typeof(Material)).Completed += OnCarColorsLoaded;
+        Addressables.LoadResourceLocationsAsync("CarModel", typeof(Mesh)).Completed += handle =>
+        {
+            OnCarModelsLoaded(handle);
+            carModelsLoaded = true;
+            CheckAllResourcesLoaded();
+        };
+
+        Addressables.LoadResourceLocationsAsync("CarColor", typeof(Material)).Completed += handle =>
+        {
+            OnCarColorsLoaded(handle);
+            carColorsLoaded = true;
+            CheckAllResourcesLoaded();
+        };
+    }
+
+    private void CheckAllResourcesLoaded()
+    {
+        if (carModelsLoaded && carColorsLoaded)
+        {
+            OnAllResourcesLoaded();
+        }
+    }
+
+    private void OnAllResourcesLoaded()
+    {
+        string savedModelName = PlayerPrefs.GetString(SelectedCarModelKey, null);
+        string savedColorName = PlayerPrefs.GetString(SelectedCarColorKey, null);
+
+        if (!string.IsNullOrEmpty(savedModelName))
+        {
+            for (int i = 0; i < carModels.Count; i++)
+            {
+                if (carModels[i].AssetGUID.Contains(savedModelName))
+                {
+                    currentCarIndex = i;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            currentCarIndex = 0;
+        }
+        LoadCarModel(currentCarIndex);
+
+        if (!string.IsNullOrEmpty(savedColorName))
+        {
+            for (int i = 0; i < carColors.Count; i++)
+            {
+                if (carColors[i].AssetGUID.Contains(savedColorName))
+                {
+                    currentColorIndex = i;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            currentColorIndex = 0;
+        }
+        LoadCarColor(currentColorIndex);
     }
 
     private void OnCarModelsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
@@ -81,12 +149,11 @@ public class UI_Custom : UIPopup
         {
             foreach (var location in handle.Result)
                 carModels.Add(new AssetReference(location.PrimaryKey));
-
-            if (carModels.Count > 0)
-                LoadCarModel(currentCarIndex);
         }
         else
+        {
             Debug.LogError("Failed to load car models from Addressable Group.");
+        }
     }
 
     private void OnCarColorsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
@@ -95,16 +162,15 @@ public class UI_Custom : UIPopup
         {
             foreach (var location in handle.Result)
                 carColors.Add(new AssetReference(location.PrimaryKey));
-
-            if (carColors.Count > 0)
-                LoadCarColor(currentColorIndex);
         }
         else
+        {
             Debug.LogError("Failed to load car colors from Addressable Group.");
+        }
     }
 
     #region 차량겉모습
-    private void OnCarLeftButtonClicked()
+    private void OnCarLeftButtonClicked()   
     {
         currentCarIndex = (currentCarIndex - 1 + carModels.Count) % carModels.Count;
         LoadCarModel(currentCarIndex);
@@ -182,6 +248,25 @@ public class UI_Custom : UIPopup
     }
     #endregion
 
+    private void SaveSelectedCarData()
+    {
+        if (carMesh.mesh != null)
+        {
+            // Remove " Instance" from the car model name before saving
+            string modelName = carMesh.mesh.name.Replace(" Instance", "");
+            PlayerPrefs.SetString(SelectedCarModelKey, modelName);
+        }
+
+        if (carMaterial.material != null)
+        {
+            // Remove " (Instance)" from the car color name before saving
+            string colorName = carMaterial.material.name.Replace(" (Instance)", "");
+            PlayerPrefs.SetString(SelectedCarColorKey, colorName);
+        }
+
+        PlayerPrefs.Save();
+    }
+
     //연출
     private void RotateCarPreview()
     {
@@ -198,8 +283,7 @@ public class UI_Custom : UIPopup
     {
         if (carMesh.mesh != null && carMaterial.material != null)
         {
-            CarSelectionData.SelectedMesh = carMesh.mesh;
-            CarSelectionData.SelectedMaterial = carMaterial.material;
+            SaveSelectedCarData();
             SceneManager.LoadScene("Start");
         }
     }
@@ -214,12 +298,4 @@ public class UI_Custom : UIPopup
         SceneManager.LoadScene("Start");
 
     }
-}
-
-// Add a static class to store the selected data globally
-// 이걸 다른곳으로
-public static class CarSelectionData
-{
-    public static Mesh SelectedMesh { get; set; }
-    public static Material SelectedMaterial { get; set; }
 }

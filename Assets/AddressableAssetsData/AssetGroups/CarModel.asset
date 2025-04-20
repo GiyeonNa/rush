@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 1de359ae4806d5047925ce6b960dbf91
   m_SerializeEntries:
   - m_GUID: 028724a65b499cd4ebfc30add6eb1bde
-    m_Address: Assets/05.Assets/Toon Vehicles Free/Models/City Cars/Ambulance.fbx
+    m_Address: Ambulance
     m_ReadOnly: 0
     m_SerializedLabels:
     - CarModel
