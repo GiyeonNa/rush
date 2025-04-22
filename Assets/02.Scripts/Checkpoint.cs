@@ -5,30 +5,12 @@ public class Checkpoint : MonoBehaviour
 {
     public int checkpointID; 
     public bool isPassed = false; 
-    [SerializeField]
-    private Material goldMaterial; 
-
-    private Renderer checkpointRenderer;
 
     public delegate void CheckpointPassedHandler(int checkpointID);
     public static event CheckpointPassedHandler OnCheckpointPassed;
 
     private void Awake()
     {
-        checkpointRenderer = GetComponent<Renderer>();
-    }
-
-    public void ReplaceMaterialWithGold()
-    {
-        if (goldMaterial != null && checkpointRenderer != null)
-            checkpointRenderer.material = goldMaterial;
-        else
-            Debug.LogWarning($"Gold material or renderer is missing on checkpoint {checkpointID}");
-    }
-
-    public void ResetMaterialToOriginal()
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)

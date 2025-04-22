@@ -21,38 +21,30 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
         checkpointTimes.Clear();
         nextCheckpointIndex = 0;
 
-        if (checkpoints.Count > 0)
-            checkpoints[nextCheckpointIndex].ReplaceMaterialWithGold();
+        for (int i = 0; i < checkpoints.Count; i++)
+            checkpoints[i].gameObject.SetActive(i == nextCheckpointIndex);
     }
 
     private void OnDestroy()
     {
-        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime; // 이벤트 해제
+        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime; 
     }
 
     private void Start()
     {
         Init();
+
     }
 
     private void RecordCheckpointTime(int checkpointID)
     {
         if (!checkpointTimes.ContainsKey(checkpointID))
         {
-            float currentTime = TimerManager.Instance.GetCurrentTime();
-            checkpointTimes[checkpointID] = currentTime;
-            Debug.Log($"Checkpoint {checkpointID} passed at {currentTime:F2} seconds");
-
-            if (nextCheckpointIndex < checkpoints.Count)
-                checkpoints[nextCheckpointIndex].ResetMaterialToOriginal();
-
+            checkpoints[checkpointID].gameObject.SetActive(false);
             nextCheckpointIndex = checkpointID + 1;
 
             if (nextCheckpointIndex < checkpoints.Count)
-                checkpoints[nextCheckpointIndex].ReplaceMaterialWithGold();
-
-            if (checkpointID == checkpoints.Count - 1)
-                Debug.Log($"Final checkpoint reached! Total time: {currentTime:F3} seconds");
+                checkpoints[nextCheckpointIndex].gameObject.SetActive(true);
         }
     }
 
