@@ -3,11 +3,7 @@ using TMPro;
 
 public class TimerManager : MonoSingleton<TimerManager>
 {
-    [SerializeField]
-    private TextMeshProUGUI timerText;
-
     private float currentTime;
-
     private RecordSO record;
 
     private void Awake()
@@ -36,9 +32,6 @@ public class TimerManager : MonoSingleton<TimerManager>
         base.UpdateLogic();
 
         currentTime += Time.deltaTime;
-
-        if (timerText != null)
-            timerText.text = FormatTime(currentTime);
     }
 
     
@@ -50,15 +43,6 @@ public class TimerManager : MonoSingleton<TimerManager>
     public float GetCurrentTime()
     {
         return currentTime;
-    }
-
-    private string FormatTime(float time)
-    {
-        int minutes = Mathf.FloorToInt(time / 60);
-        int seconds = Mathf.FloorToInt(time % 60);
-        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
-
-        return $"{minutes:00}.{seconds:00}.{milliseconds:000}";
     }
 
     public void AddPenalty(float penaltyTime)

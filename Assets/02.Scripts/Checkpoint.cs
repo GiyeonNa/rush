@@ -9,7 +9,6 @@ public class Checkpoint : MonoBehaviour
     private Material goldMaterial; 
 
     private Renderer checkpointRenderer;
-    private Material originalMaterial; 
 
     public delegate void CheckpointPassedHandler(int checkpointID);
     public static event CheckpointPassedHandler OnCheckpointPassed;
@@ -17,9 +16,6 @@ public class Checkpoint : MonoBehaviour
     private void Awake()
     {
         checkpointRenderer = GetComponent<Renderer>();
-
-        if (checkpointRenderer != null)
-            originalMaterial = checkpointRenderer.material;
     }
 
     public void ReplaceMaterialWithGold()
@@ -32,10 +28,7 @@ public class Checkpoint : MonoBehaviour
 
     public void ResetMaterialToOriginal()
     {
-        if (originalMaterial != null && checkpointRenderer != null)
-            checkpointRenderer.material = originalMaterial;
-        else
-            Debug.LogWarning($"Original material or renderer is missing on checkpoint {checkpointID}");
+
     }
 
     private void OnTriggerEnter(Collider other)

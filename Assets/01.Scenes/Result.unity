@@ -293,7 +293,7 @@ RectTransform:
   - {fileID: 514822015}
   - {fileID: 913422668}
   - {fileID: 1907054645}
-  m_Father: {fileID: 2128063234}
+  m_Father: {fileID: 269538750}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.7513891}
   m_AnchorMax: {x: 0.5, y: 0.7513891}
@@ -5241,6 +5241,7 @@ GameObject:
   - component: {fileID: 269538750}
   - component: {fileID: 269538752}
   - component: {fileID: 269538751}
+  - component: {fileID: 269538753}
   m_Layer: 5
   m_Name: UI_Result
   m_TagString: Untagged
@@ -5260,9 +5261,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 529759893}
   - {fileID: 81162550}
   - {fileID: 539859869}
   - {fileID: 854023341}
+  - {fileID: 141370836}
   m_Father: {fileID: 2128063234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5308,6 +5311,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269538749}
   m_CullTransparentMesh: 1
+--- !u!114 &269538753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269538749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9073f1e5547784e8e6070312103ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClose: []
+  m_isSortLast: 1
+  restartButton: {fileID: 539859872}
+  backButton: {fileID: 854023338}
 --- !u!1 &321061236
 GameObject:
   m_ObjectHideFlags: 0
@@ -25035,7 +25054,7 @@ RectTransform:
   - {fileID: 352828974}
   - {fileID: 646717993}
   - {fileID: 822868898}
-  m_Father: {fileID: 2128063234}
+  m_Father: {fileID: 269538750}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -50834,8 +50853,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 269538750}
-  - {fileID: 141370836}
-  - {fileID: 529759893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
