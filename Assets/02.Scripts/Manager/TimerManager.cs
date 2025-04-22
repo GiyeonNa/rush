@@ -4,7 +4,7 @@ using TMPro;
 public class TimerManager : MonoSingleton<TimerManager>
 {
     private float currentTime;
-    private RecordSO record;
+    private StageSO record;
 
     private void Awake()
     {

@@ -8,6 +8,9 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField]
     private AudioSource soundEffectSource;
 
+    [SerializeField]
+    private AudioClip buttonPopupSoundClip;
+
     private Dictionary<string, AudioClip> soundClips = new Dictionary<string, AudioClip>();
 
     private void Awake()
@@ -57,5 +60,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     {
         if (!soundClips.ContainsKey(clipName))
             soundClips.Add(clipName, clip);
+    }
+
+    public void PlayButtonPopupSound()
+    {
+        soundEffectSource.PlayOneShot(buttonPopupSoundClip);
     }
 }

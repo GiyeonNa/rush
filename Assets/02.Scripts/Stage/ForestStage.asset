@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285ae19864e381447a65a0a509a3003e, type: 3}
+  m_Name: ForestStage
+  m_EditorClassIdentifier: 
+  stageName: Forest
+  stageImage: {fileID: 21300000, guid: 1b7f9435d7310244097a7022ef1839f3, type: 3}
+  bestTime: 1000
+  firstPlaceTime: 1000
+  secondPlaceTime: 10000
+  thirdPlaceTime: 100000

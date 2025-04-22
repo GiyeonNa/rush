@@ -3,9 +3,9 @@ using UnityEngine;
 public class RecordManager : MonoSingleton<RecordManager>
 {
     [SerializeField]
-    private RecordSO recordSO;
+    private StageSO recordSO;
 
-    public RecordSO Record => recordSO;
+    public StageSO Record => recordSO;
 
     private void Awake()
     {

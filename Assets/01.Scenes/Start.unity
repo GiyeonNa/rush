@@ -570,6 +570,7 @@ MonoBehaviour:
   useDontDestroyOnLoad: 1
   backgroundMusicSource: {fileID: 1240514828}
   soundEffectSource: {fileID: 1240514827}
+  buttonPopupSoundClip: {fileID: 8300000, guid: bf4ae6b8c62314c29bd84983374412eb, type: 3}
 --- !u!4 &1240514830
 Transform:
   m_ObjectHideFlags: 0

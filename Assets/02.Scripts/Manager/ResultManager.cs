@@ -50,6 +50,6 @@ public class ResultManager : MonoSingleton<ResultManager>
     private void OnClickRetry()
     {
         // 재시작 로직
-        SceneManager.LoadScene("CityMap");
+        SceneManager.LoadScene("City");
     }
 }
