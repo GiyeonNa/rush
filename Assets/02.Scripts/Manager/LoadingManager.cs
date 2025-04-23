@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LoadingManager : MonoSingleton<LoadingManager>
 {
@@ -14,6 +16,10 @@ public class LoadingManager : MonoSingleton<LoadingManager>
     private Slider loadingSlider; // Reference to the slider UI
     [SerializeField]
     private TextMeshProUGUI loadingText; // Reference to the text UI
+    [SerializeField]
+    private List<TextMeshProUGUI> recordTextList;
+    [SerializeField]
+    private Image loaadingImage;
 
     void Start()
     {
@@ -22,9 +28,22 @@ public class LoadingManager : MonoSingleton<LoadingManager>
 
     IEnumerator LoadSceneProcess()
     {
-        string nextScene = PlayerPrefs.GetString("NextScene"); // Get the next scene name
+        string nextScene = PlayerPrefs.GetString("NextScene"); 
+        string stageDataJson = PlayerPrefs.GetString("CurrentStageData");
+
+        StageSO currentStageData = ScriptableObject.CreateInstance<StageSO>();
+        JsonUtility.FromJsonOverwrite(stageDataJson, currentStageData);
+
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
-        op.allowSceneActivation = false;
+        op.allowSceneActivation = false; 
+
+        // Load the sprite using Addressables
+        //Addressables.LoadAssetAsync<Sprite>(currentStageData.stageImageName).Completed += OnSpriteLoaded;
+
+        recordTextList[0].text = FormatTime(currentStageData.firstPlaceTime);
+        recordTextList[1].text = FormatTime(currentStageData.secondPlaceTime);
+        recordTextList[2].text = FormatTime(currentStageData.thirdPlaceTime);
+        loaadingImage.sprite = currentStageData.stageImage;
 
         while (!op.isDone)
         {
@@ -46,9 +65,23 @@ public class LoadingManager : MonoSingleton<LoadingManager>
         }
     }
 
-    public void SetResultData(float arrivalTime, bool isBestTime, int rank)
+    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
     {
-        PlayerArrivalTime = arrivalTime;
-        PlayerRank = rank;
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            loaadingImage.sprite = handle.Result;
+        }
+        else
+        {
+            Debug.LogError($"Failed to load sprite: {handle.OperationException}");
+        }
+    }
+
+    private string FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
+        return $"{minutes:D2}:{seconds:D2}.{milliseconds:D3}";
     }
 }

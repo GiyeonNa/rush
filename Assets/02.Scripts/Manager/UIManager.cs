@@ -1,64 +1,86 @@
+using System.Collections.Generic;
+using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
-using TMPro;
-using ArcadeVP;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    [SerializeField]
-    private TextMeshProUGUI timerText;
+    private Dictionary<string, GameObject> cachedUIs = new Dictionary<string, GameObject>();
 
+    // 미리 로드할 UI 키 목록
     [SerializeField]
-    private TextMeshProUGUI speedText;
-
-    private TimerManager timerManager;
-    private ArcadeVehicleController playerVehicle;
+    private List<string> preloadUIKeys;
 
     private void Awake()
     {
         base.Awake();
+        PreloadUIs();
     }
 
-    public override void Init()
+    private void PreloadUIs()
     {
-        base.Init();
-        timerManager = TimerManager.Instance;
-        playerVehicle = Object.FindFirstObjectByType<ArcadeVehicleController>();
-    }
-
-    private void Start()
-    {
-        Init();
-    }
-
-    private void Update()
-    {
-        UpdateTimerUI();
-        UpdateSpeedUI();
-    }
-
-    private void UpdateTimerUI()
-    {
-        if (timerManager != null && timerText != null)
+        foreach (string uiKey in preloadUIKeys)
         {
-            timerText.text = FormatTime(timerManager.GetCurrentTime());
+            // Addressables로 UI 로드
+            Addressables.LoadAssetAsync<GameObject>(uiKey).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    // 로드된 UI를 캐싱
+                    GameObject uiInstance = Instantiate(handle.Result, transform);
+                    uiInstance.SetActive(false); // 초기에는 비활성화
+                    cachedUIs[uiKey] = uiInstance;
+                }
+                else
+                {
+                    Debug.LogError($"Failed to preload UI: {uiKey}");
+                }
+            };
         }
     }
 
-    private void UpdateSpeedUI()
+    public void ShowUI(string uiKey)
     {
-        if (playerVehicle != null && speedText != null)
+        Canvas canvas = Object.FindFirstObjectByType<Canvas>();
+        if (canvas == null)
         {
-            float speed = playerVehicle.carVelocity.magnitude;
-            speedText.text = $"{speed:F1} km/h";
+            Debug.LogError("No Canvas found in the scene.");
+            return;
+        }
+
+        if (cachedUIs.ContainsKey(uiKey))
+        {
+            // 이미 로드된 UI가 있다면 활성화
+            GameObject uiInstance = cachedUIs[uiKey];
+            uiInstance.transform.SetParent(canvas.transform, false); // Set as child of canvas
+            uiInstance.GetComponent<UIPopup>().Open();
+        }
+        else
+        {
+            // Addressables로 UI 로드
+            Addressables.LoadAssetAsync<GameObject>(uiKey).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    GameObject uiInstance = Instantiate(handle.Result);
+                    uiInstance.transform.SetParent(canvas.transform, false); // Set as child of canvas
+                    cachedUIs[uiKey] = uiInstance;
+                    uiInstance.SetActive(true);
+                }
+                else
+                {
+                    Debug.LogError($"Failed to load UI: {uiKey}");
+                }
+            };
         }
     }
 
-    private string FormatTime(float time)
+    public void HideUI(string uiKey)
     {
-        int minutes = Mathf.FloorToInt(time / 60);
-        int seconds = Mathf.FloorToInt(time % 60);
-        int milliseconds = Mathf.FloorToInt((time * 1000) % 1000);
-
-        return $"{minutes:00}.{seconds:00}.{milliseconds:000}";
+        if (cachedUIs.ContainsKey(uiKey))
+        {
+            cachedUIs[uiKey].SetActive(false);
+        }
     }
 }

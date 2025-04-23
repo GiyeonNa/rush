@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ForestStage
   m_EditorClassIdentifier: 
   stageName: Forest
+  stageImageName: Forest
   stageImage: {fileID: 21300000, guid: 1b7f9435d7310244097a7022ef1839f3, type: 3}
   bestTime: 1000
   firstPlaceTime: 1000

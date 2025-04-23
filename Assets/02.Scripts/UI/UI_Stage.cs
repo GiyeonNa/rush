@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class UI_Stage : UIPopup
 {
@@ -15,12 +17,14 @@ public class UI_Stage : UIPopup
     {
         base.Awake();
     }
+
     private void Init()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform != null)
-            rectTransform.sizeDelta = new Vector2(630, 500); // 원하는 크기로 설정
+            rectTransform.sizeDelta = new Vector2(630, 500); // Adjust size
     }
+
     private void Start()
     {
         base.Open();
@@ -31,9 +35,9 @@ public class UI_Stage : UIPopup
     {
         if (stageData != null)
         {
-            stageText.text = stageData.stageName;
-            playerTimeText.text = $"Best Time: {stageData.bestTime:F2}s";
-            stageImage.sprite = stageData.stageImage;
+            SetText(stageText, stageData.stageName);
+            SetText(playerTimeText, $"Best Time: {stageData.bestTime:F2}s");
+            SetIcon(stageImage, stageData.stageImage);
         }
     }
 }

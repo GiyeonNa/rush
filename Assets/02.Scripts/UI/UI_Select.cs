@@ -42,6 +42,12 @@ public class UI_Select : UIPopup
         Addressables.LoadAssetsAsync<StageSO>("StageInfo", null).Completed += OnStagesLoaded;
     }
 
+    private void Start()
+    {
+        Init();
+        base.Open();
+    }
+
     private void OnStagesLoaded(AsyncOperationHandle<IList<StageSO>> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -50,7 +56,6 @@ public class UI_Select : UIPopup
             if (stages.Count > 0)
             {
                 CreateStageUI();
-                UpdateStageUI();
             }
         }
         else
@@ -75,13 +80,11 @@ public class UI_Select : UIPopup
             uiStageInstance.SetStageData(stage);
             uiStages.Add(uiStageInstance);
         }
+
+        UpdateStageUI();
     }
 
-    private void Start()
-    {
-        Init();
-        base.Open();
-    }
+
 
     private void UpdateStageUI()
     {
@@ -112,6 +115,9 @@ public class UI_Select : UIPopup
         if (stages != null && currentStageIndex >= 0 && currentStageIndex < stages.Count)
         {
             string targetSceneName = stages[currentStageIndex].stageName; // Get the target stage name
+
+            string stageDataJson = JsonUtility.ToJson(stages[currentStageIndex]);
+            PlayerPrefs.SetString("CurrentStageData", stageDataJson);
             PlayerPrefs.SetString("NextScene", targetSceneName); // Store the target scene name in PlayerPrefs
             SceneManager.LoadScene("Loading"); // Load the Loading scene
         }

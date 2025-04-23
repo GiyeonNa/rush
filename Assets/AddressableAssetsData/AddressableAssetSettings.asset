@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 0bbd501ecd2cc2a42bb943b852d3a459
   m_currentHash:
     serializedVersion: 2
-    Hash: 329457519f79635a0a77d01c13a02f95
+    Hash: a4ff5796e6bf06e26937026f78d24b7e
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -61,6 +61,8 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: e8a3825c56d02ee4f9fc5805975c41a5, type: 2}
   - {fileID: 11400000, guid: e35f44c323a93314ba6b080899ef3d5c, type: 2}
+  - {fileID: 11400000, guid: 58ac426547be4c0479f50bbc0cade8fa, type: 2}
+  - {fileID: 11400000, guid: 45a454839f92c5c4a97fbe7cb0417677, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -102,6 +104,9 @@ MonoBehaviour:
     - default
     - CarModel
     - CarColor
+    - StageInfo
+    - StageImage
+    - UI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: f808329b5e6aeba409608663a1525553, type: 2}

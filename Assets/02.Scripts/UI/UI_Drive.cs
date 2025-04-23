@@ -3,6 +3,8 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using ArcadeVP;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class UI_Drive : UIPopup
 {
@@ -26,9 +28,8 @@ public class UI_Drive : UIPopup
 
     private void Init()
     {
-        // Initialize UI
         for (int i = 0; i < lapTimeTexts.Count; i++)
-            lapTimeTexts[i].text = "--:--:---";
+            SetText(lapTimeTexts[i], "--:--:---");
         currentLapIndex = 0;
     }
 
@@ -49,7 +50,7 @@ public class UI_Drive : UIPopup
         if (playerVehicle != null && speedText != null)
         {
             float speed = playerVehicle.carVelocity.magnitude;
-            speedText.text = $"{speed:F1} km/h";
+            SetText(speedText, $"{speed:F1} km/h");
         }
     }
 
@@ -58,7 +59,8 @@ public class UI_Drive : UIPopup
         if (currentLapIndex < lapTimeTexts.Count)
         {
             float currentTime = TimerManager.Instance.GetCurrentTime();
-            lapTimeTexts[currentLapIndex].text = FormatTime(currentTime);
+            SetText(lapTimeTexts[currentLapIndex], FormatTime(currentTime));
+
         }
     }
 
@@ -68,7 +70,7 @@ public class UI_Drive : UIPopup
         {
             // Record the final time for the current lap
             float passTime = TimerManager.Instance.GetCurrentTime();
-            lapTimeTexts[checkpointID].text = FormatTime(passTime);
+            SetText(lapTimeTexts[checkpointID], FormatTime(passTime));
 
             // Move to the next lap
             currentLapIndex = checkpointID + 1;
@@ -85,9 +87,12 @@ public class UI_Drive : UIPopup
 
     private void OnClickPause()
     {
-        // Pause the game and show options
-        // GameManager.Instance.PauseGame();
+        // Pause the game
+        Time.timeScale = 0f;
+        UIManager.Instance.ShowUI("UI_Pause");
     }
+
+
 
     private void OnDestroy()
     {
