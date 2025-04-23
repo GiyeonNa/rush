@@ -76,11 +76,12 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void HideUI(string uiKey)
+    public void HideUI(string uiKey, GameObject uiInstance)
     {
         if (cachedUIs.ContainsKey(uiKey))
         {
-            cachedUIs[uiKey].SetActive(false);
+            cachedUIs[uiKey] = uiInstance;
+            uiInstance.transform.SetParent(transform, false);
         }
     }
 }

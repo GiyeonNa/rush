@@ -21,19 +21,25 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
         checkpointTimes.Clear();
         nextCheckpointIndex = 0;
 
+        // Reinitialize checkpoints if they are null or empty
+        if (checkpoints == null || checkpoints.Count == 0)
+        {
+            checkpoints = new List<Checkpoint>(FindObjectsByType<Checkpoint>(FindObjectsSortMode.None));
+            checkpoints.Sort((a, b) => a.checkpointID.CompareTo(b.checkpointID)); // Sort by checkpointID
+        }
+
         for (int i = 0; i < checkpoints.Count; i++)
             checkpoints[i].gameObject.SetActive(i == nextCheckpointIndex);
     }
 
     private void OnDestroy()
     {
-        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime; 
+        Checkpoint.OnCheckpointPassed -= RecordCheckpointTime;
     }
 
     private void Start()
     {
         Init();
-
     }
 
     private void RecordCheckpointTime(int checkpointID)
@@ -58,7 +64,7 @@ public class CheckPointManager : MonoSingleton<CheckPointManager>
         if (checkpoints.Count > 0)
             return checkpoints[checkpoints.Count - 1].checkpointID;
 
-        return -1; 
+        return -1;
     }
 }
 
