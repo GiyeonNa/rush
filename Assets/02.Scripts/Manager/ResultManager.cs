@@ -5,30 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoSingleton<ResultManager>
 {
-    [SerializeField]
-    private TextMeshProUGUI playerTimeText;
-    [SerializeField]
-    private TextMeshProUGUI rankText;
-    [SerializeField]
-    private Button backButton;
-    [SerializeField]
-    private Button retryButton;
+    private float playTime;
+    private int rank;
 
     private void Awake()
     {
         base.Awake();
-        backButton.onClick.AddListener(OnClickBack);
-        retryButton.onClick.AddListener(OnClickRetry);
     }
 
     private void Start()
     {
         base.Init();
-
-        float playerTime = LoadingManager.PlayerArrivalTime;
-        int rank = LoadingManager.PlayerRank;
-
-        SetResultData(playerTime, rank);
+        playTime = LoadingManager.PlayerArrivalTime;
+        rank = LoadingManager.PlayerRank;
     }
 
     public override void Init()
@@ -36,20 +25,14 @@ public class ResultManager : MonoSingleton<ResultManager>
         base.Init();
     }
 
-    public void SetResultData(float playerTime, int rank)
+    public float GetTime()
     {
-        playerTimeText.text = $"Time: {playerTime:F2} seconds";
-        rankText.text = $"Rank: {rank}";
+        return playTime;
     }
 
-    private void OnClickBack()
+    public int GetRank()
     {
-        // 뒤로가기 로직
-        SceneManager.LoadScene("Select");
+        return rank;
     }
-    private void OnClickRetry()
-    {
-        // 재시작 로직
-        SceneManager.LoadScene("City");
-    }
+
 }

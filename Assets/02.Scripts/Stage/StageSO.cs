@@ -23,10 +23,8 @@ public class StageSO : ScriptableObject
             return 1;
         else if (playerTime < secondPlaceTime)
             return 2;
-        else if (playerTime < thirdPlaceTime)
-            return 3;
         else
-            return 4; 
+            return 3;
     }
 
     public bool UpdateBestTime(float playerTime)

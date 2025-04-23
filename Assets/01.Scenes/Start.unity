@@ -724,7 +724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useDontDestroyOnLoad: 1
   preloadUIKeys:
-  - UI
+  - UI_Pause
 --- !u!1 &2106167507
 GameObject:
   m_ObjectHideFlags: 0

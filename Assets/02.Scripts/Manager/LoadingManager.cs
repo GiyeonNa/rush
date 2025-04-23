@@ -37,9 +37,6 @@ public class LoadingManager : MonoSingleton<LoadingManager>
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false; 
 
-        // Load the sprite using Addressables
-        //Addressables.LoadAssetAsync<Sprite>(currentStageData.stageImageName).Completed += OnSpriteLoaded;
-
         recordTextList[0].text = FormatTime(currentStageData.firstPlaceTime);
         recordTextList[1].text = FormatTime(currentStageData.secondPlaceTime);
         recordTextList[2].text = FormatTime(currentStageData.thirdPlaceTime);
@@ -62,18 +59,6 @@ public class LoadingManager : MonoSingleton<LoadingManager>
                 yield return new WaitForSeconds(0.5f);
                 op.allowSceneActivation = true;
             }
-        }
-    }
-
-    private void OnSpriteLoaded(AsyncOperationHandle<Sprite> handle)
-    {
-        if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-            loaadingImage.sprite = handle.Result;
-        }
-        else
-        {
-            Debug.LogError($"Failed to load sprite: {handle.OperationException}");
         }
     }
 
