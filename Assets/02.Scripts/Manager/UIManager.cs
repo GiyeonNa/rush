@@ -22,6 +22,13 @@ public class UIManager : MonoSingleton<UIManager>
     {
         foreach (string uiKey in preloadUIKeys)
         {
+            // Check if the UI is already cached
+            if (cachedUIs.ContainsKey(uiKey))
+            {
+                Debug.Log($"UI already cached: {uiKey}, skipping preload.");
+                continue;
+            }
+
             // Addressables·Î UI ·Îµå
             Addressables.LoadAssetAsync<GameObject>(uiKey).Completed += handle =>
             {
