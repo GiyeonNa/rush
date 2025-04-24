@@ -13,8 +13,8 @@ public class StageSO : ScriptableObject
 
     private void OnEnable()
     {
-        if(bestTime == 0)
-            bestTime = firstPlaceTime;
+        //if(bestTime == 0)
+        //    bestTime = firstPlaceTime;
     }
 
     public int GetPlayerRank(float playerTime)

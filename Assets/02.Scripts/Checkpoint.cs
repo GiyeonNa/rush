@@ -28,8 +28,10 @@ public class Checkpoint : MonoBehaviour
                 RecordManager.Instance.TryUpdateBestTime(currentTime);
                 int rank = RecordManager.Instance.GetPlayerRank(currentTime);
 
-                LoadingManager.PlayerArrivalTime = currentTime;
-                LoadingManager.PlayerRank = rank;
+                PlayerPrefs.SetFloat("LastCheckpointTime", currentTime);
+                PlayerPrefs.SetInt("PlayerRank", rank);
+                PlayerPrefs.Save();
+
                 string stageDataJson = JsonUtility.ToJson(RecordManager.Instance.Record);
                 PlayerPrefs.SetString("CurrentStageData", stageDataJson);
                 PlayerPrefs.SetString("NextScene", "Result");

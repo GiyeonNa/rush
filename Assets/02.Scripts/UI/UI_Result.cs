@@ -15,8 +15,6 @@ public class UI_Result : UIPopup
     private Button backButton;
     [SerializeField]
     private GameObject[] stars;
-
-
     private void Awake()
     {
         base.Awake();
@@ -33,10 +31,11 @@ public class UI_Result : UIPopup
     public override void ResetData()
     {
         base.ResetData();
-        SetText(playerTimeText, FormatTime(ResultManager.Instance.GetTime()));
-        SetText(rankText, ResultManager.Instance.GetRank().ToString());
+        var time = PlayerPrefs.GetFloat("LastCheckpointTime");
+        var rank = PlayerPrefs.GetFloat("PlayerRank");
+        SetText(playerTimeText, FormatTime(time));
+        SetText(rankText, rank.ToString());
 
-        int rank = ResultManager.Instance.GetRank();
         for (int i = 0; i < stars.Length; i++)
             SetActive(stars[i], i < (4 - rank));
     }

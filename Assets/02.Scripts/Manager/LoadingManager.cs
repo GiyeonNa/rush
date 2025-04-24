@@ -9,9 +9,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LoadingManager : MonoSingleton<LoadingManager>
 {
-    public static float PlayerArrivalTime { get; set; }
-    public static int PlayerRank { get; set; }
-
     [SerializeField]
     private Slider loadingSlider; // Reference to the slider UI
     [SerializeField]
@@ -20,6 +17,11 @@ public class LoadingManager : MonoSingleton<LoadingManager>
     private List<TextMeshProUGUI> recordTextList;
     [SerializeField]
     private Image loaadingImage;
+
+    private void Awake()
+    {
+        base.Awake();
+    }
 
     void Start()
     {

@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: CityStage
   m_EditorClassIdentifier: 
   stageName: City
-  stageImageName: City
   stageImage: {fileID: 21300000, guid: ea00acaf4ac224e40a107df9aca79c65, type: 3}
-  bestTime: 100
+  bestTime: 29
   firstPlaceTime: 100
   secondPlaceTime: 1000
   thirdPlaceTime: 10000
