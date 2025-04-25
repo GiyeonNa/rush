@@ -5,6 +5,7 @@ public class TimerManager : MonoSingleton<TimerManager>
 {
     private float currentTime;
     private StageSO record;
+    private bool isTimelinePlaying = false;
 
     private void Awake()
     {
@@ -25,16 +26,14 @@ public class TimerManager : MonoSingleton<TimerManager>
 
     private void Update()
     {
-        //마지막 체크포인트면 타이머 멈추기
-        if (CheckPointManager.Instance.IsLastCheckpointReached())
+        // If the timeline is playing, block timer updates
+        if (isTimelinePlaying || CheckPointManager.Instance.IsLastCheckpointReached())
             return;
 
         base.UpdateLogic();
-
         currentTime += Time.deltaTime;
     }
 
-    
     public void ResetTimer()
     {
         currentTime = 0f;
@@ -50,4 +49,8 @@ public class TimerManager : MonoSingleton<TimerManager>
         currentTime += penaltyTime;
     }
 
+    public void SetTimelinePlaying(bool isPlaying)
+    {
+        isTimelinePlaying = isPlaying;
+    }
 }
