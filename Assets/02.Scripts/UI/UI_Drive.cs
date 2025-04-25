@@ -50,7 +50,7 @@ public class UI_Drive : UIPopup
         if (playerVehicle != null && speedText != null)
         {
             float speed = playerVehicle.carVelocity.magnitude;
-            SetText(speedText, $"{speed:F1} km/h");
+            //SetText(speedText, $"{speed:F1} km/h");
         }
     }
 
