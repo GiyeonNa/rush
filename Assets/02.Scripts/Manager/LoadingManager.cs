@@ -13,10 +13,19 @@ public class LoadingManager : MonoSingleton<LoadingManager>
     private Slider loadingSlider; // Reference to the slider UI
     [SerializeField]
     private TextMeshProUGUI loadingText; // Reference to the text UI
+
+
+    [Header("InGame")]
+    [SerializeField]
+    private GameObject inGameBG;
     [SerializeField]
     private List<TextMeshProUGUI> recordTextList;
     [SerializeField]
     private Image loaadingImage;
+
+    [Header("MainMenu")]
+    [SerializeField]
+    private GameObject mainMenuBG;
 
     private void Awake()
     {
@@ -25,24 +34,45 @@ public class LoadingManager : MonoSingleton<LoadingManager>
 
     void Start()
     {
+        DetermineBackground(); // Determine which background to show
         StartCoroutine(LoadSceneProcess());
+    }
+
+    private void DetermineBackground()
+    {
+        string loadingType = PlayerPrefs.GetString("LoadingType", "MainMenu"); // Default to MainMenu
+
+        if (loadingType == "InGame")
+        {
+            inGameBG.SetActive(true);
+            mainMenuBG.SetActive(false);
+        }
+        else
+        {
+            inGameBG.SetActive(false);
+            mainMenuBG.SetActive(true);
+        }
     }
 
     IEnumerator LoadSceneProcess()
     {
         string nextScene = PlayerPrefs.GetString("NextScene"); 
-        string stageDataJson = PlayerPrefs.GetString("CurrentStageData");
+        string loadingType = PlayerPrefs.GetString("LoadingType", "MainMenu"); // Default to MainMenu
 
-        StageSO currentStageData = ScriptableObject.CreateInstance<StageSO>();
-        JsonUtility.FromJsonOverwrite(stageDataJson, currentStageData);
+        if (loadingType == "InGame")
+        {
+            string stageDataJson = PlayerPrefs.GetString("CurrentStageData");
+            StageSO currentStageData = ScriptableObject.CreateInstance<StageSO>();
+            JsonUtility.FromJsonOverwrite(stageDataJson, currentStageData);
+
+            recordTextList[0].text = FormatTime(currentStageData.firstPlaceTime);
+            recordTextList[1].text = FormatTime(currentStageData.secondPlaceTime);
+            recordTextList[2].text = FormatTime(currentStageData.thirdPlaceTime);
+            loaadingImage.sprite = currentStageData.stageImage;
+        }
 
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false; 
-
-        recordTextList[0].text = FormatTime(currentStageData.firstPlaceTime);
-        recordTextList[1].text = FormatTime(currentStageData.secondPlaceTime);
-        recordTextList[2].text = FormatTime(currentStageData.thirdPlaceTime);
-        loaadingImage.sprite = currentStageData.stageImage;
 
         while (!op.isDone)
         {

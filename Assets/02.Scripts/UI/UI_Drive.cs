@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using ArcadeVP;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using DG.Tweening;
 
 public class UI_Drive : UIPopup
 {
@@ -36,6 +37,7 @@ public class UI_Drive : UIPopup
     private void Start()
     {
         base.Open();
+        SoundManager.Instance.PlayBackgroundMusic(true);
         Init();
     }
 
@@ -70,7 +72,13 @@ public class UI_Drive : UIPopup
         {
             // Record the final time for the current lap
             float passTime = TimerManager.Instance.GetCurrentTime();
-            SetText(lapTimeTexts[checkpointID], FormatTime(passTime));
+            TextMeshProUGUI lapText = lapTimeTexts[checkpointID];
+            SetText(lapText, FormatTime(passTime));
+
+            // Apply tweening effects
+            lapText.DOColor(Color.green, 0.5f).SetEase(Ease.InOutQuad); // Change color to green
+            lapText.transform.DOScale(Vector3.one * 1.2f, 0.5f).SetEase(Ease.OutBounce) // Scale up
+                .OnComplete(() => lapText.transform.DOScale(Vector3.one, 0.3f)); // Scale back to normal
 
             // Move to the next lap
             currentLapIndex = checkpointID + 1;
@@ -91,8 +99,6 @@ public class UI_Drive : UIPopup
         Time.timeScale = 0f;
         UIManager.Instance.ShowUI("UI_Pause");
     }
-
-
 
     private void OnDestroy()
     {

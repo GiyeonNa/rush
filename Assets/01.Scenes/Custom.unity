@@ -21504,6 +21504,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Custom
       objectReference: {fileID: 0}
+    - target: {fileID: 4493044196227825216, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 169.234
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493044196227825216, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 63.38391
+      objectReference: {fileID: 0}
     - target: {fileID: 8953403663190197356, guid: bd1adf04784f5534aa0235f42988e618, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0

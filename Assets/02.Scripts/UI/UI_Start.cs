@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UI_Start : UIPopup
 {
@@ -11,7 +12,7 @@ public class UI_Start : UIPopup
     [SerializeField]
     private Button exitButton;
     [SerializeField]
-    private Button optionButton;
+    private GameObject titleImageObject;
 
     private void Awake()
     {
@@ -19,12 +20,24 @@ public class UI_Start : UIPopup
         SetBtn(startButton, OnClickStart);
         SetBtn(customButton, OnClickCustom);
         SetBtn(exitButton, OnClickExit);
-        SetBtn(optionButton, OnClickOption);
     }
 
     private void Start()
     {
         base.Open();
+        SoundManager.Instance.PlayBackgroundMusic();
+
+        if (titleImageObject != null)
+        {
+            RectTransform rectTransform = titleImageObject.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                float originalY = rectTransform.anchoredPosition.y;
+                rectTransform.DOAnchorPosY(originalY + 10f, 1f)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(-1, LoopType.Yoyo);
+            }
+        }
     }
 
 
@@ -32,25 +45,25 @@ public class UI_Start : UIPopup
     private void OnClickStart()
     {
         SoundManager.Instance.PlayButtonPopupSound();
-        SceneManager.LoadScene("Select");
+        PlayerPrefs.SetString("LoadingType", "MainMenu");
+        PlayerPrefs.SetString("NextScene", "Select");
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 
     private void OnClickCustom()
     {
         SoundManager.Instance.PlayButtonPopupSound();
-        SceneManager.LoadScene("Custom");
+        PlayerPrefs.SetString("LoadingType", "MainMenu");
+        PlayerPrefs.SetString("NextScene", "Custom");
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 
     private void OnClickExit()
     {
         SoundManager.Instance.PlayButtonPopupSound();
         Application.Quit();
-    }
-
-    private void OnClickOption()
-    {
-        SoundManager.Instance.PlayButtonPopupSound();
-        Debug.Log("옵션 버튼 클릭됨");
     }
     #endregion
 }

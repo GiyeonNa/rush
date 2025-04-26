@@ -19,6 +19,7 @@ public class Checkpoint : MonoBehaviour
         {
             isPassed = true;
             SpawnManager.Instance.SetSpawnPosition(transform.position);
+            SoundManager.Instance.PlayCheckPointSound();
             OnCheckpointPassed?.Invoke(checkpointID);
 
             //마지막 체크포인트인지 확인

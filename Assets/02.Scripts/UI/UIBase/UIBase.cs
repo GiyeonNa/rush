@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 using UnityEngine.U2D;
+using DG.Tweening;
 
 public class UIBase : MonoBehaviour
 {
@@ -43,10 +44,20 @@ public class UIBase : MonoBehaviour
     //button에 이벤트 할당
     public void SetBtn(Button _btn, UnityEngine.Events.UnityAction _click, bool _isSound = true)
     {
-        if (null == _btn)
-            return;
+        if (_btn == null) return;
 
-        _btn.onClick.AddListener(_click);
+        _btn.onClick.RemoveAllListeners();
+        _btn.onClick.AddListener(() =>
+        {
+            if (_isSound)
+                SoundManager.Instance?.PlayButtonPopupSound();
+
+            _btn.transform.DOScale(0.9f, 0.1f).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                _btn.transform.DOScale(1f, 0.1f).SetEase(Ease.OutQuad);
+                _click.Invoke();
+            });
+        });
     }
 
     //버튼 상호작용 ON,OFF

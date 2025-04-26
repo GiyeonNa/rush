@@ -467,7 +467,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -609,22 +609,6 @@ PrefabInstance:
     - target: {fileID: 7719203541918994902, guid: 03bc95e9fc8b66240a074c959201fa6d, type: 3}
       propertyPath: m_Name
       value: UI_Select
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868628391943495761, guid: 03bc95e9fc8b66240a074c959201fa6d, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868628391943495761, guid: 03bc95e9fc8b66240a074c959201fa6d, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868628391943495761, guid: 03bc95e9fc8b66240a074c959201fa6d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868628391943495761, guid: 03bc95e9fc8b66240a074c959201fa6d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

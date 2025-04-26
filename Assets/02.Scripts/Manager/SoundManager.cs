@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
@@ -8,14 +9,26 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField]
     private AudioSource soundEffectSource;
 
+    [Header("UI Sound Effects")]
     [SerializeField]
     private AudioClip buttonPopupSoundClip;
+
+    [Header("Background Music")]
+    [SerializeField]
+    private AudioClip mainMenuMusicClip;
+    [SerializeField]
+    private AudioClip raceTrackMusicClip;
+
+    [Header("Car Sounds")]
+    [SerializeField]
+    private AudioClip checkPointSoundClip;
 
     private Dictionary<string, AudioClip> soundClips = new Dictionary<string, AudioClip>();
 
     private void Awake()
     {
         base.Awake();
+        DontDestroyOnLoad(gameObject); // Ensure SoundManager persists across scenes
     }
 
     public override void Init()
@@ -31,18 +44,16 @@ public class SoundManager : MonoSingleton<SoundManager>
             Debug.LogWarning($"Sound clip '{clipName}' not found.");
     }
 
-    public void PlayBackgroundMusic(string clipName, bool loop = true)
+
+    public void PlayBackgroundMusic(bool isInGame = false)
     {
-        if (soundClips.TryGetValue(clipName, out AudioClip clip))
-        {
-            backgroundMusicSource.clip = clip;
-            backgroundMusicSource.loop = loop;
-            backgroundMusicSource.Play();
-        }
+        if(isInGame)
+            backgroundMusicSource.clip = raceTrackMusicClip;
         else
-        {
-            Debug.LogWarning($"Background music clip '{clipName}' not found.");
-        }
+            backgroundMusicSource.clip = mainMenuMusicClip;
+
+        backgroundMusicSource.loop = true;
+        backgroundMusicSource.Play();
     }
 
     public void StopBackgroundMusic()
@@ -65,5 +76,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void PlayButtonPopupSound()
     {
         soundEffectSource.PlayOneShot(buttonPopupSoundClip);
+    }
+
+    public void PlayCheckPointSound()
+    {
+        soundEffectSource.PlayOneShot(checkPointSoundClip);
     }
 }

@@ -24,7 +24,7 @@ public class UI_Stage : UIPopup
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform != null)
-            rectTransform.sizeDelta = new Vector2(630, 500); // Adjust size
+            rectTransform.sizeDelta = new Vector2(1000, 650); 
     }
 
     private void Start()

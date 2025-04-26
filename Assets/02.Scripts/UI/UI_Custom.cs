@@ -7,7 +7,6 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-
 public class UI_Custom : UIPopup
 {
     [Header("차량 선택")]
@@ -62,16 +61,18 @@ public class UI_Custom : UIPopup
     private void Awake()
     {
         base.Awake();
-        carLeftButton.onClick.AddListener(OnCarLeftButtonClicked);
-        carRightButton.onClick.AddListener(OnCarRightButtonClicked);
-        colorLeftButton.onClick.AddListener(OnColorLeftButtonClicked);
-        colorRightButton.onClick.AddListener(OnColorRightButtonClicked);
-        applyButton.onClick.AddListener(OnClickApplyButton);
-        closeButton.onClick.AddListener(OnClickCloseButton);
-        backButton.onClick.AddListener(OnClickCloseButton);
+       
+        SetBtn(carLeftButton, OnCarLeftButtonClicked);
+        SetBtn(carRightButton, OnCarRightButtonClicked);
+        SetBtn(colorLeftButton, OnColorLeftButtonClicked);
+        SetBtn(colorRightButton, OnColorRightButtonClicked);
+        SetBtn(applyButton, OnClickApplyButton);
+        SetBtn(backButton, OnClickCloseButton);
+        SetBtn(closeButton, OnClickCloseButton);
 
         LoadCarModelsAndColorsFromGroup();
     }
+
 
     private void Update()
     {
@@ -284,7 +285,10 @@ public class UI_Custom : UIPopup
         if (carMesh.mesh != null && carMaterial.material != null)
         {
             SaveSelectedCarData();
-            SceneManager.LoadScene("Start");
+            PlayerPrefs.SetString("LoadingType", "MainMenu");
+            PlayerPrefs.SetString("NextScene", "Start");
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Loading");
         }
     }
 
@@ -293,9 +297,9 @@ public class UI_Custom : UIPopup
     /// </summary>
     private void OnClickCloseButton()
     {
-        //일단은 씬으로 돌리자
-        Debug.Log("Not Save");
-        SceneManager.LoadScene("Start");
-
+        PlayerPrefs.SetString("LoadingType", "MainMenu");
+        PlayerPrefs.SetString("NextScene", "Start");
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("Loading");
     }
 }
